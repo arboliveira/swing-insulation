@@ -1,0 +1,1 @@
+mvn install && mvn exec:exec --projects examples
