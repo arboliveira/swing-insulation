@@ -4,14 +4,13 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-import br.com.arbo.swinginsulation.InsulatedProxyFactory;
+import br.com.arbo.java.util.concurrent.DaemonThreadFactory;
 
-public class ControllerProxyFactoryTest extends Fixture {
+public class InsulatedProxyFactoryTest {
 
 	@Test
 	public void undeclaredExceptionWithUncaughtExceptionHandler_shouldCapture()
@@ -60,30 +59,20 @@ public class ControllerProxyFactoryTest extends Fixture {
 		}
 	}
 
-	@Override
-	protected <T> InsulatedProxyFactory<T> newProxyFactory(final T decorated) {
+	private <T> InsulatedProxyFactory<T> newProxyFactory(final T decorated) {
 		final Executor executor = Executors
-				.newSingleThreadExecutor(threadFactory);
+				.newSingleThreadExecutor(new DaemonThreadFactory());
 		return InsulatedProxyFactory.with(decorated, executor);
 	}
 
-	@Override
-	protected String expectedThreadName() {
-		return threadFactory.nameOfLastCreatedThread;
+	public static class CrashException extends RuntimeException {
+		//
 	}
 
-	static class ThreadFactoryForTest implements ThreadFactory {
+	public interface CrashDontDeclare {
 
-		String nameOfLastCreatedThread;
+		void crash();
 
-		@Override
-		public Thread newThread(final Runnable r) {
-			final Thread t = Executors.defaultThreadFactory().newThread(r);
-			this.nameOfLastCreatedThread = t.getName();
-			return t;
-		}
 	}
-
-	private final ThreadFactoryForTest threadFactory = new ThreadFactoryForTest();
 
 }

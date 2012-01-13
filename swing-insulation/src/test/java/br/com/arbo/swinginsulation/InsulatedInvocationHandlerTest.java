@@ -4,24 +4,14 @@ import static br.com.arbo.org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 
+import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
-import br.com.arbo.swinginsulation.InsulatedProxyFactory;
-
-abstract public class Fixture {
-
-	protected abstract String expectedThreadName();
-
-	protected abstract <T> InsulatedProxyFactory<T> newProxyFactory(
-			final T decorated);
-
-	public interface MethodWithoutReturn {
-
-		void methodWithoutReturn();
-	}
+public final class InsulatedInvocationHandlerTest {
 
 	@Test
 	public void methodWithoutReturnWontBlock() throws InterruptedException {
@@ -61,6 +51,11 @@ abstract public class Fixture {
 					"Inside never unlocked. Am I holding the outside lock?");
 		}
 		assertThat(my.where, equalTo(expectedThreadName()));
+	}
+
+	public interface MethodWithoutReturn {
+
+		void methodWithoutReturn();
 	}
 
 	public interface MethodWithReturn {
@@ -110,7 +105,8 @@ abstract public class Fixture {
 	@Test
 	public void methodWithDeclaredException_shouldBlock() throws CrashException {
 		final Object toBeReturned = new Object();
-		class DontActuallyCrashJustDeclareException implements CrashDeclare {
+		class DontActuallyCrashJustDeclareExceptionInSignature implements
+				CrashDeclare {
 
 			String where;
 			Object returned;
@@ -122,7 +118,7 @@ abstract public class Fixture {
 			}
 
 		}
-		final DontActuallyCrashJustDeclareException my = new DontActuallyCrashJustDeclareException();
+		final DontActuallyCrashJustDeclareExceptionInSignature my = new DontActuallyCrashJustDeclareExceptionInSignature();
 		final CrashDeclare proxy = newProxy(my);
 		proxy.crash();
 		assertThat(my.returned, is(toBeReturned));
@@ -131,7 +127,7 @@ abstract public class Fixture {
 
 	@Test(expected = CrashException.class)
 	public void declaredException_shouldPropagate() throws CrashException {
-		class DeclareException implements CrashDeclare {
+		class DeclareExceptionInSignature implements CrashDeclare {
 
 			@Override
 			public void crash() throws CrashException {
@@ -139,7 +135,7 @@ abstract public class Fixture {
 			}
 
 		}
-		final CrashDeclare proxy = newProxy(new DeclareException());
+		final CrashDeclare proxy = newProxy(new DeclareExceptionInSignature());
 		proxy.crash();
 	}
 
@@ -158,7 +154,26 @@ abstract public class Fixture {
 	}
 
 	private <T> T newProxy(final T decorated) {
-		return newProxyFactory(decorated).newProxyInstance();
+		return Insulators.with(decorated,
+				Executors.newSingleThreadExecutor(threadFactory));
 	}
+
+	private String expectedThreadName() {
+		return threadFactory.nameOfLastCreatedThread;
+	}
+
+	static class ThreadFactoryForTest implements ThreadFactory {
+
+		String nameOfLastCreatedThread;
+
+		@Override
+		public Thread newThread(final Runnable r) {
+			final Thread t = Executors.defaultThreadFactory().newThread(r);
+			this.nameOfLastCreatedThread = t.getName();
+			return t;
+		}
+	}
+
+	private final ThreadFactoryForTest threadFactory = new ThreadFactoryForTest();
 
 }

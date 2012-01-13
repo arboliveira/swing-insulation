@@ -1,6 +1,3 @@
-/*
- * Created on 14/08/2010
- */
 package br.com.arbo.swinginsulation;
 
 import static br.com.arbo.org.junit.Assert.assertThat;
@@ -10,7 +7,6 @@ import java.io.Serializable;
 
 import org.junit.Test;
 
-import br.com.arbo.swinginsulation.SingleInterfaceIntrospection;
 import br.com.arbo.swinginsulation.SingleInterfaceIntrospection.TooManyInterfacesException;
 
 public class SingleInterfaceIntrospectionTest {

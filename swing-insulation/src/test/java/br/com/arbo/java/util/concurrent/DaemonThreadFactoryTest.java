@@ -1,6 +1,3 @@
-/*
- * Created on 14/08/2010
- */
 package br.com.arbo.java.util.concurrent;
 
 import static org.junit.Assert.assertTrue;
@@ -12,9 +9,7 @@ import java.util.concurrent.FutureTask;
 
 import org.junit.Test;
 
-import br.com.arbo.java.util.concurrent.DaemonThreadFactory;
-
-public class ExecutorsTest {
+public class DaemonThreadFactoryTest {
 
 	@Test
 	@SuppressWarnings("boxing")

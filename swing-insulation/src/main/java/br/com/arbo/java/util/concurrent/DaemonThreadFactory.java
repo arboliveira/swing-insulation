@@ -1,6 +1,3 @@
-/*
- * Created on 15/08/2010
- */
 package br.com.arbo.java.util.concurrent;
 
 import java.util.concurrent.ThreadFactory;

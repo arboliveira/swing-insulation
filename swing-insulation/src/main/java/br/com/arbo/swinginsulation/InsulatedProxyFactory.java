@@ -1,6 +1,5 @@
 package br.com.arbo.swinginsulation;
 
-import java.awt.EventQueue;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.lang.reflect.Proxy;
 import java.util.concurrent.Executor;
@@ -10,19 +9,17 @@ public final class InsulatedProxyFactory<T> {
 	@SuppressWarnings("unchecked")
 	public static <I, T extends I> InsulatedProxyFactory<I> swing(
 			final T decorated) {
-		return (InsulatedProxyFactory<I>) with(decorated,
-				EventQueueExecutor.SINGLETON);
+		return (InsulatedProxyFactory<I>) with(decorated, SWING);
 	}
 
 	public static <T> InsulatedProxyFactory<T> swing(final Class<T> single,
 			final T decorated) {
-		return with(single, decorated, EventQueueExecutor.SINGLETON);
+		return with(single, decorated, SWING);
 	}
 
 	public static <T> InsulatedProxyFactory<T> swing(final T decorated,
 			final ClassLoader classLoader, final Class<?>[] interfaces) {
-		return with(decorated, EventQueueExecutor.SINGLETON, classLoader,
-				interfaces);
+		return with(decorated, SWING, classLoader, interfaces);
 	}
 
 	public static <I, T extends I> InsulatedProxyFactory<I> with(
@@ -80,20 +77,11 @@ public final class InsulatedProxyFactory<T> {
 		this.interfaces = interfaces;
 	}
 
-	static final class EventQueueExecutor implements Executor {
-
-		static final EventQueueExecutor SINGLETON = new EventQueueExecutor();
-
-		@Override
-		public void execute(final Runnable command) {
-			EventQueue.invokeLater(command);
-		}
-
-	}
-
 	private final T decorated;
 	private final ClassLoader classLoader;
 	private final Class<?>[] interfaces;
 	private Executor executor;
 	private UncaughtExceptionHandler uncaughtExceptionHandler;
+
+	private static final EventQueueExecutor SWING = new EventQueueExecutor();
 }
