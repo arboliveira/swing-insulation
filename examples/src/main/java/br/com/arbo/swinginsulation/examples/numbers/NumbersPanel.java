@@ -17,11 +17,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
 public final class NumbersPanel extends javax.swing.JPanel implements
-		ViewActions {
+		InsideUI {
 
 	public static NumbersPanel make(final String description,
-			final String info, final ControllerActions controller) {
-		final NumbersPanel p = new NumbersPanel(controller, info);
+			final String info, final OutsideUI outsideUI) {
+		final NumbersPanel p = new NumbersPanel(outsideUI, info);
 		p.setInitialContent(description);
 		return p;
 	}
@@ -239,10 +239,10 @@ public final class NumbersPanel extends javax.swing.JPanel implements
 
 	void jButton1ActionPerformed(
 			@SuppressWarnings("unused") final java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
-		clear();
+		clearCrunchingFeedback();
 		final String[] numbers = this.jTextField1.getText().split(" ");
 		for (final String number : numbers) {
-			this.controllerActions.crunch(number);
+			this.outsideUI.crunch(number);
 		}
 	}// GEN-LAST:event_jButton1ActionPerformed
 
@@ -266,22 +266,16 @@ public final class NumbersPanel extends javax.swing.JPanel implements
 
 	private void setInitialContent(final String description) {
 		this.jButton1.setText(description);
-		clear();
+		clearCrunchingFeedback();
 	}
 
-	private void clear() {
+	private void clearCrunchingFeedback() {
 		this.jLabel2.setText(" ");
 		this.jLabel3.setText(" ");
 		this.jLabel4.setText(" ");
 		this.lblLastError.setText(" ");
 		this.lblLastError.setVisible(false);
 		this.flashboard.clear();
-	}
-
-	private NumbersPanel(final ControllerActions controller, final String info) {
-		this.controllerActions = controller;
-		this.info = info;
-		initComponents();
 	}
 
 	void addToFlashboard(final JLabel added) {
@@ -297,8 +291,11 @@ public final class NumbersPanel extends javax.swing.JPanel implements
 		return lblCrunching;
 	}
 
-	private final ControllerActions controllerActions;
-	private final String info;
+	private NumbersPanel(final OutsideUI outsideUI, final String info) {
+		this.outsideUI = outsideUI;
+		this.info = info;
+		initComponents();
+	}
 
 	class Flashboard {
 
@@ -349,5 +346,7 @@ public final class NumbersPanel extends javax.swing.JPanel implements
 		private final Flash flash = new Flash();
 	}
 
+	private final OutsideUI outsideUI;
+	private final String info;
 	private final Flashboard flashboard = new Flashboard();
 }

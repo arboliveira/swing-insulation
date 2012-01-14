@@ -1,6 +1,6 @@
 package br.com.arbo.swinginsulation.examples.numbers;
 
-public interface ViewActions {
+public interface InsideUI {
 
 	void updateProgress(int current, int total, String thread);
 

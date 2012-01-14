@@ -2,6 +2,8 @@ package br.com.arbo.swinginsulation.examples.numbers;
 
 import java.util.concurrent.ThreadFactory;
 
+import javax.swing.JFrame;
+
 import br.com.arbo.java.util.concurrent.DaemonThreadFactory;
 import br.com.arbo.swinginsulation.examples.util.Presenter;
 
@@ -19,8 +21,13 @@ public class Main {
 	}
 
 	private void run() {
-		Presenter.showFrames(sequential.newFrame(), parallel.newFrame(),
-				dumb.newFrame());
+		Presenter.showFrames(newFrame(sequential), newFrame(parallel),
+				newFrame(dumb));
+	}
+
+	JFrame newFrame(final Numbers numbers) {
+		return Presenter.newFrame("Number cruncher - " + numbers.getName(),
+				numbers.getComponent());
 	}
 
 	private final Numbers sequential;

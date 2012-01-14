@@ -1,6 +1,6 @@
 package br.com.arbo.swinginsulation.examples.numbers;
 
-public interface ControllerActions {
+public interface OutsideUI {
 
 	void crunch(String number);
 }
