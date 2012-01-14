@@ -8,6 +8,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>swinginsulation-examples</artifactId>
 	<name>Swing Insulation :: Examples</name>
+	<description>Swing Insulation helps protect your Java Swing applications from freezing, flickering, indeterminism, race conditions and other multithreading adverse effects.</description>
+	<url>https://github.com/arboliveira/swing-insulation#readme</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>arbo</id>
+			<name>André de Oliveira</name>
+			<email>andre@arbo.com.br</email>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -40,6 +56,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.5</version>
 				<executions>
 					<execution>
 						<phase>package</phase>
@@ -60,6 +77,7 @@
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.2</version>
 				<configuration>
 					<executable>java</executable>
 					<arguments>

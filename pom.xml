@@ -6,12 +6,31 @@
 	<packaging>pom</packaging>
 	<name>Swing Insulation :: Parent</name>
 	<version>1.0-SNAPSHOT</version>
+	<description>Swing Insulation helps protect your Java Swing applications from freezing, flickering, indeterminism, race conditions and other multithreading adverse effects.</description>
+	<url>https://github.com/arboliveira/swing-insulation#readme</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>arbo</id>
+			<name>André de Oliveira</name>
+			<email>andre@arbo.com.br</email>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git@github.com:arboliveira/swing-insulation.git</connection>
+		<developerConnection>scm:git:git@github.com:arboliveira/swing-insulation.git</developerConnection>
+		<url>git@github.com:arboliveira/swing-insulation.git</url>
+	</scm>
 	<modules>
 		<module>swing-insulation</module>
 		<module>examples</module>
 	</modules>
-	<description>A minimalistic approach to protect Swing applications against concurrency problems.</description>
-	<url>http://arbo.com.br/swinginsulation</url>
 	<build>
 		<plugins>
 			<plugin>
@@ -62,4 +81,9 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<parent>
+		<groupId>org.sonatype.oss</groupId>
+		<artifactId>oss-parent</artifactId>
+		<version>7</version>
+	</parent>
 </project>

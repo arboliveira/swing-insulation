@@ -8,6 +8,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>swinginsulation</artifactId>
 	<name>Swing Insulation</name>
+	<description>Swing Insulation helps protect your Java Swing applications from freezing, flickering, indeterminism, race conditions and other multithreading adverse effects.</description>
+	<url>https://github.com/arboliveira/swing-insulation#readme</url>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<id>arbo</id>
+			<name>André de Oliveira</name>
+			<email>andre@arbo.com.br</email>
+		</developer>
+	</developers>
 	<dependencies>
 		<dependency>
 			<groupId>org.hamcrest</groupId>

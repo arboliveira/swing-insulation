@@ -1,14 +1,17 @@
 Swing Insulation
 ================
 
-Before you begin
+Swing Insulation helps protect your Java Swing applications 
+from freezing, flickering, indeterminism, race conditions 
+and other multithreading adverse effects.
+
+
+See it in action
 ----------------
 
 Run the example application:
 
     example-numbers.cmd
-
-Then, proceed reading.
 
 
 The problem
