@@ -1,6 +1,7 @@
 package br.com.arbo.swinginsulation.examples.numbers;
 
 import java.lang.Thread.UncaughtExceptionHandler;
+import java.util.concurrent.Executor;
 
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -31,7 +32,7 @@ public class NumbersPanelTest {
 		text.clearText();
 		text.typeText("1 foo bar 2");
 		new JButtonOperator(frame).push();
-		capture.assertNoErrors();
+		captureErrors.assertNoErrors();
 		m.assertIsSatisfied();
 	}
 
@@ -41,12 +42,22 @@ public class NumbersPanelTest {
 
 	private OutsideUI newProxy() {
 		final InsulatedProxyFactory<OutsideUI> factory = InsulatedProxyFactory
-				.with(OutsideUI.class, outsideUI, new Dumb.DumbExecutor());
-		factory.setUncaughtExceptionHandler(capture);
+				.with(OutsideUI.class, outsideUI,
+						new ActuallySwingThreadImmediate());
+		factory.setUncaughtExceptionHandler(captureErrors);
 		return factory.newProxyInstance();
 	}
 
-	static class Capture implements UncaughtExceptionHandler {
+	static class ActuallySwingThreadImmediate implements Executor {
+
+		@Override
+		public void execute(final Runnable command) {
+			command.run();
+		}
+
+	}
+
+	static class CaptureErrors implements UncaughtExceptionHandler {
 
 		Throwable exception;
 
@@ -66,7 +77,7 @@ public class NumbersPanelTest {
 	final Mockery m = new JUnit4Mockery();
 	final OutsideUI outsideUI = m.mock(OutsideUI.class);
 	private final String name = this.getClass().getName();
-	private final Capture capture = new Capture();
+	private final CaptureErrors captureErrors = new CaptureErrors();
 	private final NumbersPanel panel;
 
 }
