@@ -1,11 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.arbo.swinginsulation</groupId>
 	<artifactId>swinginsulation-parent</artifactId>
 	<packaging>pom</packaging>
 	<name>Swing Insulation :: Parent</name>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0</version>
 	<description>Swing Insulation helps protect your Java Swing applications from freezing, flickering, indeterminism, race conditions and other multithreading adverse effects.</description>
 	<url>https://github.com/arboliveira/swing-insulation#readme</url>
 	<licenses>
